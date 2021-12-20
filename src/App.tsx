@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
-
+//add filter and useState
 export type filterType='All'|'Active'|'Completed'
 
 function App() {
