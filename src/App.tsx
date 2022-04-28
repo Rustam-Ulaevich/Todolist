@@ -24,7 +24,6 @@ function App() {
         tasksObj[todolistId] = filteredTasks;
         setTasks({...tasksObj});
     }
-
     function addTask(title: string, todolistId: string) {
         let task = {id: v1(), title: title, isDone: false};
         let tasks = tasksObj[todolistId];
@@ -32,7 +31,6 @@ function App() {
         tasksObj[todolistId] = newTasks;
         setTasks({...tasksObj});
     }
-
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
         let tasks = tasksObj[todolistId]
         let task = tasks.find(t => t.id === taskId);
@@ -42,7 +40,6 @@ function App() {
         }
 
     }
-
     function changeFilter(value: FilterValueType, todolistId: string) {
         let todolist = todolists.find(tl => tl.id === todolistId);
         if (todolist) {
@@ -50,7 +47,6 @@ function App() {
             setTodolists([...todolists])
         }
     }
-
     function changeTaskTitleStatus(taskId: string, title: string, todolistId: string) {
         let tasks = tasksObj[todolistId]
         let task = tasks.find(t => t.id === taskId);
@@ -59,7 +55,6 @@ function App() {
             setTasks({...tasksObj})
         }
     }
-
     function changeTitleTodolist(id: string, title: string) {
         let todolist = todolists.find(tl => tl.id === id)
         if (todolist) {
@@ -67,14 +62,12 @@ function App() {
             setTodolists([...todolists]);
         }
     }
-
     function removeTodolist(todolistId: string) {
         let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
         setTodolists(filteredTodolist);
         delete tasksObj[todolistId];
         setTasks(tasksObj)
     }
-
     function addTodolist(title: string) {
         let todolist: TodolistType = {id: v1(), title: title, filter: "All"}
         setTodolists([todolist, ...todolists])
@@ -86,10 +79,8 @@ function App() {
     let todolistId1 = v1()
     let todolistId2 = v1()
     let [todolists, setTodolists] = useState<Array<TodolistType>>([{
-        id: todolistId1,
-        title: 'What to learn',
-        filter: 'All'
-    }, {id: todolistId2, title: 'What to buy', filter: 'All'}])
+        id: todolistId1, title: 'What to learn', filter: 'All'},
+        {id: todolistId2, title: 'What to buy', filter: 'All'}])
     let [tasksObj, setTasks] = useState<TasksStateType>({
         [todolistId1]: [{id: v1(), title: "HTML&CSS", isDone: true}, {
             id: v1(),
