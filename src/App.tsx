@@ -6,7 +6,7 @@ import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 
-export type FilterValueType = 'All' | 'Active' | 'Completed'
+export type FilterValueType = 'all' | 'active' | 'completed'
 export type TodolistType = {
     id: string
     title: string
@@ -69,7 +69,7 @@ function App() {
         setTasks(tasksObj)
     }
     function addTodolist(title: string) {
-        let todolist: TodolistType = {id: v1(), title: title, filter: "All"}
+        let todolist: TodolistType = {id: v1(), title: title, filter: "all"}
         setTodolists([todolist, ...todolists])
         setTasks({
             ...tasksObj, [todolist.id]: []
@@ -79,8 +79,8 @@ function App() {
     let todolistId1 = v1()
     let todolistId2 = v1()
     let [todolists, setTodolists] = useState<Array<TodolistType>>([{
-        id: todolistId1, title: 'What to learn', filter: 'All'},
-        {id: todolistId2, title: 'What to buy', filter: 'All'}])
+        id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'}])
     let [tasksObj, setTasks] = useState<TasksStateType>({
         [todolistId1]: [{id: v1(), title: "HTML&CSS", isDone: true}, {
             id: v1(),
@@ -117,10 +117,10 @@ function App() {
                     {todolists.map((tl) => {
 
                         let tasksForTodolist = tasksObj[tl.id];
-                        if (tl.filter === 'Active') {
+                        if (tl.filter === 'active') {
                             tasksForTodolist = tasksForTodolist.filter(tl => !tl.isDone)
                         }
-                        if (tl.filter === 'Completed') {
+                        if (tl.filter === 'completed') {
                             tasksForTodolist = tasksForTodolist.filter(tl => tl.isDone)
                         }
                         return <Grid item>

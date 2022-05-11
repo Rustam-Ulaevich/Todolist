@@ -28,13 +28,13 @@ type PropsType = {
 export function Todolist(props: PropsType) {
 
     const onAllClickHandler = () => {
-        props.changeFilter('All', props.id)
+        props.changeFilter('all', props.id)
     }
     const onActiveClickHandler = () => {
-        props.changeFilter('Active', props.id)
+        props.changeFilter('active', props.id)
     }
     const onCompletedClickHandler = () => {
-        props.changeFilter('Completed', props.id)
+        props.changeFilter('completed', props.id)
     }
     const removeTodolist = () => {
         props.removeTodolist(props.id)
@@ -81,11 +81,11 @@ export function Todolist(props: PropsType) {
         </div>
         <div>
 
-            <Button variant={props.filter === 'All' ? 'contained' : 'text'}
+            <Button variant={props.filter === 'all' ? 'contained' : 'text'}
                     onClick={onAllClickHandler}>All</Button>
-            <Button color={"primary"} variant={props.filter === 'Active' ? 'contained' : 'text'}
+            <Button color={"primary"} variant={props.filter === 'active' ? 'contained' : 'text'}
                     onClick={onActiveClickHandler}>Active</Button>
-            <Button color={"secondary"} variant={props.filter === 'Completed' ? 'contained' : 'text'}
+            <Button color={"secondary"} variant={props.filter === 'completed' ? 'contained' : 'text'}
                     onClick={onCompletedClickHandler}>Completed</Button>
         </div>
     </div>
