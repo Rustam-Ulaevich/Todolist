@@ -46,27 +46,16 @@ test('multyply with numberReducer', ()=> {
      expect(result).toBe(2500)
 })
 
-
-
-
-
-
-
-
-
-
-
-
 test('div with numberReducer', ()=> {
      const salary = 2500
      const red: ActionType = {
           type: 'DIV',
-          num: 0.9
+          num: 1
      }
 
      const result = numberReducer(salary, red)
 
-     expect(result).toBe(2000)
+     expect(result).toBe(2500)
 })
 
 

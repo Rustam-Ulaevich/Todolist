@@ -19,10 +19,10 @@ export type TasksStateType = {
 function App() {
 
     function removeTask(id: string, todolistId: string) {
-        let tasks = tasksObj[todolistId];
-        let filteredTasks = tasks.filter(f => f.id !== id);
-        tasksObj[todolistId] = filteredTasks;
-        setTasks({...tasksObj});
+        // let tasks = tasksObj[todolistId];
+        // let filteredTasks = tasks.filter(f => f.id !== id);
+        // tasksObj[todolistId] = filteredTasks;
+        // setTasks({...tasksObj});
     }
     function addTask(title: string, todolistId: string) {
         let task = {id: v1(), title: title, isDone: false};
@@ -47,7 +47,7 @@ function App() {
             setTodolists([...todolists])
         }
     }
-    function changeTaskTitleStatus(taskId: string, title: string, todolistId: string) {
+    function changeTaskTitle(taskId: string, title: string, todolistId: string) {
         let tasks = tasksObj[todolistId]
         let task = tasks.find(t => t.id === taskId);
         if (task) {
@@ -82,15 +82,13 @@ function App() {
         id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'}])
     let [tasksObj, setTasks] = useState<TasksStateType>({
-        [todolistId1]: [{id: v1(), title: "HTML&CSS", isDone: true}, {
-            id: v1(),
-            title: "JavaScript",
-            isDone: true
-        }, {id: v1(), title: "ReactJS", isDone: false}, {id: v1(), title: "Redux", isDone: false}, {
-            id: v1(),
-            title: "VueJS",
-            isDone: false
-        }], [todolistId2]: [{id: v1(), title: "Table", isDone: true}, {id: v1(), title: "Computer", isDone: true}]
+        [todolistId1]: [
+            {id: v1(), title: "HTML&CSS", isDone: true},
+            {id: v1(), title: "JavaScript", isDone: true},
+            {id: v1(), title: "ReactJS", isDone: false}],
+        [todolistId2]: [
+            {id: v1(), title: "Table", isDone: true},
+            {id: v1(), title: "Computer", isDone: true}]
     })
 
     return (<div className="App">
@@ -136,7 +134,7 @@ function App() {
                                 changeTaskStatus={changeStatus}
                                 filter={tl.filter}
                                 removeTodolist={removeTodolist}
-                                changeTaskTitleStatus={changeTaskTitleStatus}
+                                changeTaskTitleStatus={changeTaskTitle}
                                 changeTitleTodolist={changeTitleTodolist}
                             />
                             </Paper>
