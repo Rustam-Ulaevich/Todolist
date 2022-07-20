@@ -43,7 +43,6 @@ export function Todolist(props: PropsType) {
         props.changeTitleTodolist(props.id, title)
     }
 
-
     function addTask(title: string) {
         props.addTask(title, props.id)
     }
@@ -80,7 +79,6 @@ export function Todolist(props: PropsType) {
             }
         </div>
         <div>
-
             <Button variant={props.filter === 'all' ? 'contained' : 'text'}
                     onClick={onAllClickHandler}>All</Button>
             <Button color={"primary"} variant={props.filter === 'active' ? 'contained' : 'text'}
@@ -90,4 +88,3 @@ export function Todolist(props: PropsType) {
         </div>
     </div>
 }
-

@@ -27,8 +27,9 @@ function App() {
     function addTask(title: string, todolistId: string) {
         let task = {id: v1(), title: title, isDone: false};
         let tasks = tasksObj[todolistId];
-        let newTasks = [task, ...tasks];
-        tasksObj[todolistId] = newTasks;
+        // let newTasks = [task, ...tasks];
+        // tasksObj[todolistId] = newTasks;
+        tasksObj[todolistId] = [task, ...tasks];
         setTasks({...tasksObj});
     }
     function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
@@ -48,8 +49,9 @@ function App() {
         }
     }
     function changeTaskTitle(taskId: string, title: string, todolistId: string) {
-        let tasks = tasksObj[todolistId]
-        let task = tasks.find(t => t.id === taskId);
+        // let tasks = tasksObj[todolistId]
+        // let task = tasks.find(t => t.id === taskId);
+        let task = tasksObj[todolistId].find(t => t.id === taskId);
         if (task) {
             task.title = title
             setTasks({...tasksObj})
@@ -113,7 +115,6 @@ function App() {
                 </Grid>
                 <Grid container spacing={3}>
                     {todolists.map((tl) => {
-
                         let tasksForTodolist = tasksObj[tl.id];
                         if (tl.filter === 'active') {
                             tasksForTodolist = tasksForTodolist.filter(tl => !tl.isDone)
@@ -141,7 +142,6 @@ function App() {
                         </Grid>
                     })}
                 </Grid>
-
             </Container>
         </div>);
 }
