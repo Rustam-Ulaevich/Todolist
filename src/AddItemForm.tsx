@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import {AddCircleOutline} from "@material-ui/icons";
 
 export type AddItemFormPropsType = {
@@ -42,7 +42,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
         <IconButton onClick={addTask}  color={"primary"}>
             <AddCircleOutline />
         </IconButton>
-        {/*{error && <div className='error-message'>{error}</div>}*/}
+
     </div>
 
 }

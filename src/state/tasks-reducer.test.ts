@@ -7,27 +7,10 @@ import {
 } from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 
-test('remove task', ()=> {
+let startState: TasksStateType
 
-    const startState: TasksStateType = {
-        'todolistId1': [
-            {id: '1', title: "HTML&CSS", isDone: true},
-            {id: '2', title: "JavaScript", isDone: true},
-            {id: '3', title: "ReactJS", isDone: false}],
-        'todolistId2': [
-            {id: '1', title: "Table", isDone: true},
-            {id: '2', title: "Computer", isDone: true}]
-    }
-
-    const endState = tasksReducer(startState, removeTaskAC('2', 'todolistId2'), )
-
-    expect(endState['todolistId2'].length).toBe(1)
-    expect(endState['todolistId2'].every(t => t.id != '2')).toBeTruthy()
-
-})
-
-test('correct task should be added to correct array', () => {
-    const startState: TasksStateType = {
+beforeEach( () => {
+    startState = {
         "todolistId1": [
             {id: "1", title: "CSS", isDone: false},
             {id: "2", title: "JS", isDone: true},
@@ -37,6 +20,20 @@ test('correct task should be added to correct array', () => {
             {id: "2", title: "milk", isDone: true},
             {id: "3", title: "tea", isDone: false}]
     };
+}
+)
+
+test('remove task', ()=> {
+
+    const endState = tasksReducer(startState, removeTaskAC('2', 'todolistId2'), )
+
+    expect(endState['todolistId2'].length).toBe(1)
+    expect(endState['todolistId2'].every(t => t.id != '2')).toBeTruthy()
+
+})
+
+test('correct task should be added to correct array', () => {
+
 
     const endState = tasksReducer(startState, addTaskAC("todolistId2", "juce"))
 
