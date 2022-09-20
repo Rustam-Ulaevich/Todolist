@@ -1,4 +1,4 @@
-import {TasksStateType} from "../App";
+import {TasksStateType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {AddTodolistActionType, RemoveTodolistActionType, todolistId1, todolistId2} from "./todolists-reducer";
 
@@ -41,7 +41,7 @@ export const changeTaskTitleAC = (todolistId: string, taskId: string, title: str
     return {type:'CHANGE TASK TITLE', todolistId, taskId, title}
 }
 
-const intialState: TasksStateType = {
+const initialState: TasksStateType = {
     [todolistId1]: [
         {id: v1(), title: "HTML&CSS", isDone: true},
         {id: v1(), title: "JavaScript", isDone: true},
@@ -51,7 +51,7 @@ const intialState: TasksStateType = {
         {id: v1(), title: "Computer", isDone: true}]
 }
 
-export const tasksReducer = (state: TasksStateType = intialState, action: ActionTasksType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, action: ActionTasksType): TasksStateType => {
     switch (action.type) {
         case 'REMOVE-TASK': {
             const stateCopy = {...state}
@@ -68,13 +68,19 @@ export const tasksReducer = (state: TasksStateType = intialState, action: Action
         }
 
         case 'CHANGE TASK STATUS':{
-            const stateCopy = {...state}
-            const tasks = stateCopy[action.todolistId]
-            const task = tasks.find( t => t.id == action.taskId)
-            if(task) {
+            // let stateCopy = {...state}
+            // let tasks = stateCopy[action.todolistId]
+            // stateCopy[action.todolistId] = tasks.map( t =>
+            //     t.id === action.taskId? {...t, isDone: action.isDone} : t)
+            // return stateCopy
+
+            let todolistTask = state[action.todolistId]
+            let task = todolistTask.find( t => t.id === action.taskId)
+            if(task){
                 task.isDone = action.isDone
             }
-            return stateCopy
+            state[action.todolistId] = [...todolistTask]
+            return ({...state})
             }
 
         case 'CHANGE TASK TITLE': {

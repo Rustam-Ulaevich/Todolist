@@ -34,17 +34,17 @@ function AppWithRedux() {
     const removeTodolist = useCallback((todolistId: string) => {
         const action = removeTodolistAC(todolistId)
         dispatch(action)
-    }, [])
+    }, [dispatch])
     const addTodolist = useCallback((title: string) => {
         const action = addTodolistAC(title);
         dispatch(action);
-    }, [])
+    }, [dispatch])
     const changeTitleTodolist = useCallback (( id: string, title: string) => {
         dispatch(changeTodolistTitleAC(id, title))
-    }, [])
+    }, [dispatch])
     const changeFilter = useCallback(( filter: FilterValueType, todolistId: string) => {
         dispatch(changeTodolistFilterAC(todolistId, filter))
-    }, [])
+    }, [dispatch])
 
     return (<div className="App">
 
@@ -67,17 +67,19 @@ function AppWithRedux() {
                 }}/>
             </Grid>
             <Grid container spacing={3}>
-                {todolists.map((tl) => {
+                {
+                    todolists.map((tl) => {
 
-                    return <Grid item>
+                        let allTodolistTasks = tasks[tl.id]
+                        let tasksForTodolist = allTodolistTasks
+
+                        return <Grid item key={tl.id}>
                         <Paper style={{padding: '10px'}} >
                             <Todolist
 
-
-                                key={tl.id}
                                 id={tl.id}
                                 title={tl.title}
-                                tasks={tasks[tl.id]}
+                                tasks={tasksForTodolist}        //{tasks[tl.id]}
                                 changeFilter={changeFilter}
                                 removeTodolist={removeTodolist}
                                 changeTitleTodolist={changeTitleTodolist}

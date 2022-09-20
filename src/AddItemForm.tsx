@@ -15,7 +15,9 @@ export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
         setTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if(error !== null){
+            setError(null)
+        }
         if (e.charCode === 13) {
             addTask()
             setTitle('')

@@ -18,7 +18,7 @@ export type TaskType = {
 type PropsType = {
     id:string
     title: string
-    tasks: TasksStateType
+    tasks: Array<TaskType>
     changeFilter: (value: FilterValueType, todolistId: string) => void
     removeTodolist: (todolistId: string) => void
     changeTitleTodolist: (id: string, title: string) => void
@@ -34,26 +34,26 @@ export const Todolist = React.memo( function(props: PropsType) {
     const removeTodolist = () => {
         props.removeTodolist(props.id)
     }
-    const onChangeTitleHandler = (title: string) => {
+    const onChangeTitleHandler = useCallback((title: string) => {
         props.changeTitleTodolist(props.id, title)
-    }
+    }, [props.changeTitleTodolist, props.id])
 
-    const onAllClickHandler = () => {
-        props.changeFilter('all', props.id)
-    }
-    const onActiveClickHandler = () => {
-        props.changeFilter('active', props.id)
-    }
-    const onCompletedClickHandler = () => {
-        props.changeFilter('completed', props.id)
-    }
+    const onAllClickHandler = useCallback(() => {
+        props.changeFilter('all', props.id)}, [props.changeFilter, props.id])
+
+
+    const onActiveClickHandler = useCallback(() => {
+        props.changeFilter('active', props.id)}, [props.changeFilter, props.id])
+    const onCompletedClickHandler = useCallback(() => {
+        props.changeFilter('completed', props.id)}, [props.changeFilter, props.id])
 
     let tasksForTodolist = props.tasks;
+
     if (props.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(tl => !tl.isDone)
+        tasksForTodolist = props.tasks.filter(t => !t.isDone)
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(tl => tl.isDone)
+        tasksForTodolist = props.tasks.filter(t => t.isDone)
     }
 
     return <div>
@@ -68,24 +68,9 @@ export const Todolist = React.memo( function(props: PropsType) {
         <div>
             {
                 props.tasks.map(t => {
-                    const onRemoveHandler = () => dispatch(removeTaskAC(t.id, props.id))
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        dispatch(changeTaskStatusAC(props.id, t.id, e.currentTarget.checked))
-                    }
-                    const onChangeTitleHandler = (value: string) => {
-                        dispatch(changeTaskTitleAC(props.id, t.id, value))
-                    }
 
-                    return <div key={t.id} className={t.isDone ? 'is-done' :''}>
-                        <Checkbox
-                               onChange={onChangeHandler}
-                               color="primary"
-                               checked={t.isDone}/>
-                        <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
-                        <IconButton onClick={onRemoveHandler}>
-                            <Delete />
-                        </IconButton>
-                    </div>
+                    <Task />
+
                 })
             }
         </div>
@@ -99,3 +84,32 @@ export const Todolist = React.memo( function(props: PropsType) {
         </div>
     </div>
 })
+
+type TaskPropsType = {
+    // id: props.id
+    // task: Task
+}
+
+const Task = (props: TaskPropsType) => {
+
+    const dispatch = useDispatch()
+
+    const onRemoveHandler = () => dispatch(removeTaskAC(props.task.id, props.id))
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(changeTaskStatusAC(props.id, props.task.id, e.currentTarget.checked))
+    }
+    const onChangeTitleHandler = (value: string) => {
+        dispatch(changeTaskTitleAC(props.id, props.task.id, value))
+    }
+
+    return <div key={props.task.id} className={props.task.isDone ? 'is-done' :''}>
+        <Checkbox
+            onChange={onChangeHandler}
+            color="primary"
+            checked={props.task.isDone}/>
+        <EditableSpan title={props.task.title} onChange={onChangeTitleHandler}/>
+        <IconButton onClick={onRemoveHandler}>
+            <Delete />
+        </IconButton>
+    </div>
+}
